@@ -19,6 +19,7 @@
     <!-- Waves Effect Css -->
     <link href="{{asset('template/plugins/node-waves/waves.css')}}" rel="stylesheet" />
 
+    <link rel="stylesheet" href="{{asset("plugins/sweetalert/dist/sweetalert.css")}}">
 
 
 
@@ -283,6 +284,17 @@
 
 <!-- Waves Effect Plugin Js -->
 <script src="{{asset('template/plugins/node-waves/waves.js')}}"></script>
+
+<script src="{{asset('js/app.js')}}"></script>
+
+<script type="text/javascript">
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+</script>
+<script src="{{asset("plugins/sweetalert/dist/sweetalert.min.js")}}"></script>
 
 @yield('script')
 
