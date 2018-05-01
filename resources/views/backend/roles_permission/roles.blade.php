@@ -124,7 +124,7 @@
 
                     <div class="row clearfix">
 
-                        <input name="row_id" id="row_id" >
+                        <input name="row_id" id="row_id" type="hidden" >
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Display Name</label>
@@ -169,12 +169,11 @@
             let form=document.forms.namedItem('named_form');
             let formData=new FormData(form);
             let url1='{{route('backend.save_role_changes')}}';
-            console.log(form);
             axios.post(url1,formData)
                 .then(res=>{
-                    $('#defaultModal').modal('hide');
-                    swal("Saved!", "The Permission was successfully added", "success");
 
+                    // swal("Saved!", "The Permission was successfully added", "success");
+                    window.location='{{route('backend.roles')}}'
                 })
                 .catch(res=>{
                     if (res.response) {
