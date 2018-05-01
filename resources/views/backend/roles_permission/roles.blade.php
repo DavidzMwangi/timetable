@@ -92,7 +92,7 @@
                                         <td>{{$role->display_name}}</td>
                                         <td>{{$role->description}}</td>
                                         <td>
-                                            <a href="#" data-toggle="modal" data-target="#defaultModal" onclick="openEditMode({{$role->id,$role->display_name,$role->description}})" >
+                                            <a href="#" data-toggle="modal" data-target="#defaultModal" onclick="openEditMode('{{$role->id}}','{{$role->display_name}}','{{$role->description}}')" >
                                                 <i class="material-icons" title="Edit">mode_edit</i> <span class="icon-name" ></span>
                                             </a>
 
@@ -115,6 +115,7 @@
     {{--modal section--}}
     <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
+            <form  action="javascript:;" name="named_form" onsubmit="return saveChanges()">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="defaultModalLabel">New/Edit Modal</h4>
@@ -123,12 +124,12 @@
 
                     <div class="row clearfix">
 
-                        <input name="row_id" id="row_id" >
+                        <input name="row_id" id="row_id" type="hidden" >
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Display Name</label>
                                 <div class="form-line">
-                                    <input type="text" class="form-control " id="display_name" placeholder="Enter display name here..." />
+                                    <input type="text" class="form-control " name="display_name" id="display_name" placeholder="Enter display name here..." required/>
                                 </div>
                             </div>
                         </div>
@@ -138,7 +139,7 @@
                             <div class="form-group">
                                 <label>Description</label>
                                 <div class="form-line">
-                                    <textarea rows="5" id="description" class="form-control no-resize " placeholder="Please type the description here">{{old('description')}}</textarea>
+                                    <textarea rows="5" id="description" name="description" class="form-control no-resize " placeholder="Please type the description here" required>{{old('description')}}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -146,10 +147,12 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success waves-effect" onclick="saveChanges()">SAVE CHANGES</button>
+                    <button type="submit" class="btn btn-success waves-effect" >SAVE CHANGES</button>
                     <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">CLOSE</button>
                 </div>
+
             </div>
+            </form>
         </div>
     </div>
 
@@ -163,14 +166,40 @@
         }
 
         function saveChanges() {
+            let form=document.forms.namedItem('named_form');
+            let formData=new FormData(form);
+            let url1='{{route('backend.save_role_changes')}}';
+            axios.post(url1,formData)
+                .then(res=>{
+
+                    // swal("Saved!", "The Permission was successfully added", "success");
+                    window.location='{{route('backend.roles')}}'
+                })
+                .catch(res=>{
+                    if (res.response) {
+                        if(res.response.status == 422){
+                            var combined_error="";
+                            var errors=res.response.data.errors;
+                            for (var key in errors) {
+                                combined_error=combined_error+errors[key]+"\n";
+                            }
+                            swal("Error!", "Correct the errors below \n"+combined_error, "error");
+                        }else{
+                            console.log(res)
+                        }
+
+                    }else{
+                        console.log(res)
+                    }
+                })
+
         }
 
         function openEditMode(role_id,display_name,description) {
             // $('#defaultModal').modal(show);
-            alert(role_id);
             $('#row_id').val(role_id);
             $('#display_name').val(display_name);
-            $('#description').text(description)
+            $('#description').text(description);
 
         }
     </script>

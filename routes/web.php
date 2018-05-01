@@ -62,6 +62,7 @@ Route::group(['namespace' => 'backend', 'prefix' => 'backend', 'as' => 'backend.
 
     //permission and roles routes
     Route::get('roles','AccessController@viewRoles')->name('roles');
+    Route::post('save_role_changes','AccessController@saveRoleChanges')->name('save_role_changes');
     Route::get('permissions','AccessController@viewPermissions')->name('permissions');
 
     //users routes
