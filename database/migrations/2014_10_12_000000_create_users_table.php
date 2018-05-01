@@ -18,9 +18,14 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->integer('user_type')->default(0);
+            //0 is the super admin 1 is the class reps 2 is the students
             $table->rememberToken();
             $table->timestamps();
         });
+
+//        //create a basic user who is the super admin
+
     }
 
     /**

@@ -34,6 +34,17 @@
                         <span>Home</span>
                     </a>
                 </li>
+
+                <li class="header">System</li>
+
+                <li>
+                    <a href="{{url('typography')}}">
+                        <i class="material-icons">text_fields</i>
+                        <span>Roles and Permissions</span>
+                    </a>
+                </li>
+
+                {{--template--}}
                 <li>
                     <a href="{{url('typography')}}">
                         <i class="material-icons">text_fields</i>

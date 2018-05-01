@@ -11,12 +11,66 @@
 |
 */
 
+//Auth::routes();
+
+//auth routes
+// Authentication Routes...
+$this->get('login', 'Auth\LoginController@showLoginForm')->name('login');
+$this->post('login', 'Auth\LoginController@login');
+$this->post('logout', 'Auth\LoginController@logout')->name('logout');
+
+// Registration Routes...
+$this->get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+$this->post('register', 'Auth\RegisterController@register');
+
+// Password Reset Routes...
+$this->get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+$this->post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+$this->get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+$this->post('password/reset', 'Auth\ResetPasswordController@reset');
+
+
 Route::get('/', function () {
     return view('welcome');
 });
 Route::get('index',function (){
-    return view('index');
+    return view('backend/index');
 });
+/*
+* Frontend Routes
+* Namespaces indicate folder structure
+*/
+Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function () {
+//    includeRouteFiles(__DIR__.'/Frontend/');
+});
+
+/* ----------------------------------------------------------------------- */
+
+/*
+ * backend Routes
+ * Namespaces indicate folder structure
+ */
+Route::group(['namespace' => 'backend', 'prefix' => 'backend', 'as' => 'backend.', 'middleware' => ['role:super_admin','auth']], function () {
+    /*
+     * These routes need view-backend permission
+     * (good if you want to allow more than one group in the backend,
+     * then limit the backend features by different roles or permissions)
+     *
+     * Note: Administrator has all permissions so you do not have to specify the administrator role everywhere.
+     */
+//    includeRouteFiles(__DIR__.'/backend/');
+
+    //permission and roles routes
+    Route::get('roles','AccessController@viewRoles')->name('roles');
+    Route::get('permissions','AccessController@viewPermissions')->name('permissions');
+
+    //users routes
+    Route::get('users','UserController@index')->name('users');
+});
+
+Route::group(['middleware'=>'auth'],function (){
+
+
 Route::get('typography',function (){
     return view('typography');
 });
@@ -175,6 +229,6 @@ Route::get('yandex',function (){
 Route::get('changelogs',function (){
     return view('changelogs');
 });
-Auth::routes();
+});
 
 Route::get('/home', 'HomeController@index')->name('home');
