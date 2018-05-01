@@ -12,7 +12,7 @@
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="{{asset('template/css/themes/all-themes.css')}}" rel="stylesheet" />
-    @endsection
+@endsection
 @section('content')
     <section class="content">
         <div class="container-fluid">
@@ -1063,4 +1063,4 @@
 
     <!-- Demo Js -->
     <script src="{{asset('template/js/demo.js')}}"></script>
-    @endsection
+@endsection

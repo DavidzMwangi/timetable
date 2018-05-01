@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('backend.layouts.master')
 @section('style')
 
     <!-- Animation Css -->

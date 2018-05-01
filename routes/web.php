@@ -34,7 +34,38 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('index',function (){
-    return view('index');
+    return view('backend/index');
+});
+/*
+* Frontend Routes
+* Namespaces indicate folder structure
+*/
+Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function () {
+//    includeRouteFiles(__DIR__.'/Frontend/');
+});
+
+/* ----------------------------------------------------------------------- */
+
+/*
+ * backend Routes
+ * Namespaces indicate folder structure
+ */
+Route::group(['namespace' => 'backend', 'prefix' => 'backend', 'as' => 'backend.', 'middleware' => ['role:super_admin','auth']], function () {
+    /*
+     * These routes need view-backend permission
+     * (good if you want to allow more than one group in the backend,
+     * then limit the backend features by different roles or permissions)
+     *
+     * Note: Administrator has all permissions so you do not have to specify the administrator role everywhere.
+     */
+//    includeRouteFiles(__DIR__.'/backend/');
+
+    //permission and roles routes
+    Route::get('roles','AccessController@viewRoles')->name('roles');
+    Route::get('permissions','AccessController@viewPermissions')->name('permissions');
+
+    //users routes
+    Route::get('users','UserController@index')->name('users');
 });
 
 Route::group(['middleware'=>'auth'],function (){
