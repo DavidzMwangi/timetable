@@ -18,8 +18,8 @@
         <div class="container-fluid">
             <div class="block-header">
                 <h2>
-                    JQUERY DATATABLES
-                    <small>Taken from <a href="https://datatables.net/" target="_blank">datatables.net</a></small>
+                   Role
+                    <small>Manage roles</small>
                 </h2>
             </div>
             <div class="row clearfix">
@@ -114,11 +114,14 @@
 
     {{--modal section--}}
     <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
+
         <div class="modal-dialog" role="document">
             <form  action="javascript:;" name="named_form" onsubmit="return saveChanges()">
+
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="defaultModalLabel">New/Edit Modal</h4>
+                    <hr >
                 </div>
                 <div class="modal-body">
 
