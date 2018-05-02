@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Backend;
 
 use App\Models\Permission;
 use App\Models\Role;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+
+use Yajra\Datatables\Facades\Datatables;
 
 class AccessController extends Controller
 {
@@ -48,4 +51,31 @@ class AccessController extends Controller
                 //        $permission->name=str_replace(' ','_',strtolower($request->input('display_name')));
 
     }
+
+    public function savePermissionChanges(Request $request)
+    {
+        $this->validate($request,[
+            'display_name'=>'required',
+            'description'=>'required',
+        ]);
+
+        if ($request->has('row_id') && $request->input('row_id')!=null){
+            $permission=Permission::find($request->input('row_id'));
+
+        }else{
+            $permission=new Permission();
+        }
+
+        $permission->display_name=$request->input('display_name');
+        $permission->name=str_replace(' ','_',strtolower($request->input('display_name')));
+        $permission->description=$request->input('description');
+        $permission->save();
+
+
+        return response()->json([
+            'success'=>true,
+        ]);
+    }
+
+
 }
