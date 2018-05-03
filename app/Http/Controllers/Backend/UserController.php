@@ -6,6 +6,8 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\MessageBag;
 use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
@@ -44,6 +46,36 @@ class UserController extends Controller
             })
             ->rawColumns(['user_type'])
             ->make(true);
+
+    }
+
+    public function newUser(Request $request)
+    {
+
+        Validator::make($request->all(),[
+            'reg_no'=>'required',
+            'name'=>'required',
+            'password'=>'required|confirmed'
+        ])->validate();
+
+        //new user email
+        $email=strtolower($request->input('reg_no').'@student.com');
+
+        if (count(User::where('email',$email)->get())>0){
+            //record found
+            return redirect()->back()->withErrors(new MessageBag(['error_found'=>'The reg no already exixt']))->withInput();
+        }
+
+        $newUser=new User();
+        $newUser->name=$request->input('name');
+        $newUser->email=$email;
+        $newUser->user_type=1;
+        $newUser->password=bcrypt($request->input('password'));
+        $newUser->save();
+
+
+        return redirect()->back();
+
 
     }
 }
