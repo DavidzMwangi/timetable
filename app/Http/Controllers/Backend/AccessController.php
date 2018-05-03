@@ -100,17 +100,21 @@ class AccessController extends Controller
                     ->addColumn('checkbox',function ($permissions) use ($allocated_permissions) {
                         if (in_array($permissions->id,$allocated_permissions)){
 
-                            return "<span class=\"input-group-addon\">
-                                            <input type=\"checkbox\"  name=\"$permissions->id\" class=\"filled-in\" id=\"ig_checkbox\" checked>
-                                            <label for=\"ig_checkbox\"></label>
-                                        </span>";
+                            return ' <div class="switch">
+                                                    <label><input type="checkbox" name="'.$permissions->id.'" value="'.$permissions->id.'" checked ><span class="lever switch-col-blue"></span></label>
+                                                </div>';
 
                         }else{
 
-                            return "<span class=\"input-group-addon\">
-                                            <input type=\"checkbox\"  name=\"$permissions->id\" class=\"filled-in\" id=\"ig_checkbox\" >
-                                            <label for=\"ig_checkbox\"></label>
-                                        </span>";
+//                            return "<span class=\"input-group-addon\">
+//                                            <input type=\"checkbox\"  name=\"$permissions->id\" class=\"filled-in\" id=\"ig_checkbox\" disabled>
+//                                            <label for=\"ig_checkbox\"></label>
+//                                        </span>".
+
+                            return ' <div class="switch">
+                                                    <label><input type="checkbox" name="'.$permissions->id.'" value="'.$permissions->id.'" ><span class="lever switch-col-blue"></span></label>
+                                                </div>';
+//                             return   '<span class="label label-danger">Permission Not Attached</span>';
 
                         }
                 })
@@ -121,5 +125,33 @@ class AccessController extends Controller
                 ->make(true);
         } catch (\Exception $e) {
         }
+    }
+
+
+
+    public function deleteRolePerm($role_id)
+    {
+        PermRole::where('role_id',$role_id)->delete();
+
+
+        return response()->json();
+    }
+
+//    public function saveNewRolePerm($permission_id,$role_id)
+//    {
+//        $role=Role::find($role_id);
+//        $role->attachPermission($permission_id);
+//        return response()->json();
+//    }
+
+    public function saveNewRolePerm(Request $request)
+    {
+//        PermRole::where('role_id',$request->input('role_id'))->delete();
+
+        $permissions=$request->input('permission_array');
+        $role=Role::find($request->input('role_id'));
+        $role->attachPermissions($permissions);
+
+        return response()->json();
     }
 }
