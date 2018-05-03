@@ -18,7 +18,7 @@
         }
 
         h1 {
-            font-size: 1.5em;
+            /*font-size: 1.5em;*/
             margin-top: 0;
         }
 
@@ -27,7 +27,7 @@
         }
 
         .sidebar {
-            font-size: 0.85rem;
+            /*font-size: 0.85rem;*/
             line-height: 1;
         }
 

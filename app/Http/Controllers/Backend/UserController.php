@@ -19,21 +19,7 @@ class UserController extends Controller
     public function allUsers()
     {
 
-        /*
-         // working
-                        "columns":[
-                            {"data":"trans_id"},
-                            {"data":"bill_ref_number"},
-                            {"data":"trans_amount"},
-                            {"data":"user_name"},
-                            {"data":"remote_logs"},
-                            {"data":"kyc_name"},
-                            {"data":"msisdn"},
-                            {"data":"org_account_bal"},
-                            {"data":"created_at"}
-                        ]
 
-         */
         $users=User::select(['id','name','user_type','email','created_at']);
 //        $users=User::all();
         //working
