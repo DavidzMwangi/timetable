@@ -8,4 +8,8 @@ use Zizaco\Entrust\EntrustPermission;
 class Permission extends EntrustPermission
 {
     //
+//    public function PermissionRole()
+//    {
+//        return $this->hasMany(PermRole::class,'permission_id','id');
+//    }
 }

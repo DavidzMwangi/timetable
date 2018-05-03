@@ -3,15 +3,21 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Models\Permission;
+use App\Models\PermRole;
 use App\Models\Role;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use Yajra\Datatables\Facades\Datatables;
+use Yajra\DataTables\Facades\DataTables;
 
 class AccessController extends Controller
 {
+
+    public function __construct()
+    {
+
+    }
     //
     public function viewRoles()
     {
@@ -78,4 +84,42 @@ class AccessController extends Controller
     }
 
 
+    public function getRolesPermission( $role_id)
+    {
+
+        //get all the permissions with the role id
+        try {
+            $permissions=Permission::select(['id','display_name','description']);
+
+            $allocated_permissions=PermRole::where('role_id',$role_id)->pluck('permission_id')->toArray();
+
+            return Datatables::eloquent($permissions)
+//                ->editColumn('permission_id', function ($permission) {
+//                    return $permission->permission->display_name;
+//                })
+                    ->addColumn('checkbox',function ($permissions) use ($allocated_permissions) {
+                        if (in_array($permissions->id,$allocated_permissions)){
+
+                            return "<span class=\"input-group-addon\">
+                                            <input type=\"checkbox\"  name=\"$permissions->id\" class=\"filled-in\" id=\"ig_checkbox\" checked>
+                                            <label for=\"ig_checkbox\"></label>
+                                        </span>";
+
+                        }else{
+
+                            return "<span class=\"input-group-addon\">
+                                            <input type=\"checkbox\"  name=\"$permissions->id\" class=\"filled-in\" id=\"ig_checkbox\" >
+                                            <label for=\"ig_checkbox\"></label>
+                                        </span>";
+
+                        }
+                })
+//                ->setRowId(function ($permissions){
+//                    return $permissions->id;
+//                })
+                ->rawColumns(['checkbox'])
+                ->make(true);
+        } catch (\Exception $e) {
+        }
+    }
 }
