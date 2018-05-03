@@ -70,6 +70,11 @@ Route::group(['namespace' => 'backend', 'prefix' => 'backend', 'as' => 'backend.
     //users routes
     Route::get('users','UserController@index')->name('users');
     Route::get('all_users','UserController@allUsers')->name('all_users');
+
+    //logs viewer
+    Route::get('logs', 'LogsController@index')->name('logs');
+//    Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+
 });
 
 Route::group(['middleware'=>'auth'],function (){

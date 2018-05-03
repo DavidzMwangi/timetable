@@ -63,7 +63,13 @@
                 </li>
 
 
-
+                {{--logs--}}
+                <li>
+                    <a href="{{route('backend.logs')}}">
+                        <i class="material-icons">text_fields</i>
+                        <span>Logs</span>
+                    </a>
+                </li>
 
 
 
