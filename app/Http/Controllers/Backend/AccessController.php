@@ -146,7 +146,6 @@ class AccessController extends Controller
 
     public function saveNewRolePerm(Request $request)
     {
-//        PermRole::where('role_id',$request->input('role_id'))->delete();
 
         $permissions=$request->input('permission_array');
         $role=Role::find($request->input('role_id'));

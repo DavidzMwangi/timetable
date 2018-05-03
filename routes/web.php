@@ -74,6 +74,7 @@ Route::group(['namespace' => 'backend', 'prefix' => 'backend', 'as' => 'backend.
     //users routes
     Route::get('users','UserController@index')->name('users');
     Route::get('all_users','UserController@allUsers')->name('all_users');
+    Route::post('new_user','UserController@newUser')->name('new_user');
 
     //logs viewer
     Route::get('logs', 'LogsController@index')->name('logs');

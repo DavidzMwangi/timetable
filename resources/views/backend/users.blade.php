@@ -22,6 +22,32 @@
                     <small>All Users</small>
                 </h2>
             </div>
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                New User
+                            </h2>
+                            <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li><a href="javascript:void(0);">Action</a></li>
+                                        <li><a href="javascript:void(0);">Another action</a></li>
+                                        <li><a href="javascript:void(0);">Something else here</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body">
+                            <button type="button" class="btn btn-primary waves-effect m-r-20" data-toggle="modal" data-target="#newUserModal" >New User</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- Exportable Table -->
             <div class="row clearfix">
@@ -72,6 +98,93 @@
             <!-- #END# Exportable Table -->
         </div>
     </section>
+
+    <div class="modal fade in" id="newUserModal" tabindex="-1" role="dialog" aria-hidden="false" style="display:none;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">New User</h4>
+                </div>
+                <form action="{{url('backend/new_user')}}" method="post">
+                    {{csrf_field()}}
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="alert-danger">
+                                @if(count($errors)>0)
+                                    {{--@foreach($errors as $error)--}}
+                                    {{--{{$error}}--}}
+
+                                    {{--@endforeach--}}
+                                    {{$errors->first()}}
+
+                                @endif
+                            </div>
+                            <div class="col-md-6">
+
+                                {{--<h4>Some More data</h4>--}}
+                                <p>
+                                    <label for="name">User Name</label>
+
+                                    <input id="name" name="name" type="text" placeholder="Your name" value="{{old('name')}}" class="form-control" required>
+                                </p>
+                                <p>
+                                    <label for="reg_no" >Email</label>
+                                    <input id="reg_no" name="reg_no" type="text"  value="{{old('reg_no')}}" placeholder="Class Rep RegNo" class="form-control" required>
+                                </p>
+                                {{--<p>--}}
+                                    {{--<label for="user_level">User Level</label>--}}
+                                    {{--<select class="form-control" name="user_level" id="user_level" required>--}}
+                                        {{--<option value="admin" >Administrator</option>--}}
+                                        {{--<option value="accountant">Accountant</option>--}}
+                                    {{--</select>--}}
+                                {{--</p>--}}
+                                {{--<p>--}}
+                                {{--<input id="name2" name="name" type="text" placeholder="Your name" class="form-control">--}}
+                                {{--</p>--}}
+                                {{--<p>--}}
+                                {{--<input id="name3" name="name" type="text" placeholder="Your name" class="form-control">--}}
+                                {{--</p>--}}
+                                {{--<p>--}}
+                                {{--<input id="name4" name="name" type="text" placeholder="Your name" class="form-control">--}}
+                                {{--</p>--}}
+                                {{--<p>--}}
+                                {{--<input id="name5" name="name" type="text" placeholder="Your name" class="form-control">--}}
+                                {{--</p>--}}
+                            </div>
+                            <div class="col-md-6">
+                                {{--<h4>Some More data</h4>--}}
+                                <p>
+                                    <label for="password">Password</label>
+                                    <input id="password" name="password" type="password" placeholder="Your Password" class="form-control" required>
+                                </p>
+                                <p>
+                                    <label for="password-confirm">Password Confirmation</label>
+                                    <input id="password-confirm" name="password_confirmation" type="password" placeholder="Confirm Password" class="form-control" required>
+                                </p>
+                                {{--<p>--}}
+                                {{--<input id="name8" name="name" type="text" placeholder="Your name" class="form-control">--}}
+                                {{--</p>--}}
+                                {{--<p>--}}
+                                {{--<input id="name9" name="name" type="text" placeholder="Your name" class="form-control">--}}
+                                {{--</p>--}}
+                                {{--<p>--}}
+                                {{--<input id="name10" name="name" type="text" placeholder="Your name" class="form-control">--}}
+                                {{--</p>--}}
+                                {{--<p>--}}
+                                {{--<input id="name41" name="name" type="text" placeholder="Your name" class="form-control">--}}
+                                {{--</p>--}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn">Close</button>
+                        <button type="submit" class="btn btn-primary">Create New User</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 @endsection
 @section('script')
