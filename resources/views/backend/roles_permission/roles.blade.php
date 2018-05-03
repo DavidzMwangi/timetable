@@ -97,8 +97,13 @@
                                         <td>{{$role->description}}</td>
                                         <td>
                                             <a href="#" data-toggle="modal" data-target="#roles_permission_modal" onclick="openPermissionRole({{$role->id}})" >
-                                                <i class="material-icons" title="Edit">mode_edit</i> <span class="icon-name" ></span>
+                                                <i class="material-icons " title="View">mode_zoom_in</i> <span class="icon-name" ></span>
                                             </a>
+
+                                            {{--<a href="{{route('backend.attach_permission_view',['role_id'=>$role->id])}}"  >--}}
+                                                {{--<i class="material-icons pull-left" title="Add Permision">mode_camera_enhance</i> <span class="icon-name" ></span>--}}
+
+                                            {{--</a>--}}
 
 
                                         </td>
@@ -175,12 +180,12 @@
     <div class="modal fade" id="roles_permission_modal" tabindex="-1" role="dialog">
 
         <div class="modal-dialog" role="document">
-            <form  action="javascript:;" name="named_form" onsubmit="return saveChanges()">
-
+            {{--<form  action="javascript:;" name="named_form" onsubmit="return saveChanges()">--}}
+            <input type="hidden" id="selected_row_id">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="defaultModalLabel">New/Edit Modal</h4>
-                    <hr >
+                    <hr>
                 </div>
                 <div class="modal-body">
 
@@ -208,12 +213,12 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success waves-effect" >SAVE CHANGES</button>
+                    <button type="button" class="btn btn-success waves-effect" onclick="reassignPermissions()">SAVE CHANGES</button>
                     <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">CLOSE</button>
                 </div>
 
             </div>
-            </form>
+            {{--</form>--}}
         </div>
     </div>
 
@@ -269,7 +274,7 @@
 
 
         function openPermissionRole(role_id) {
-
+            $('#selected_row_id').val(role_id);
             let url1='{{url('backend/get_roles_permissions')}}'+'/'+role_id;
             // console.log(url1);
             $('#roles_permission_table').DataTable({
@@ -294,6 +299,34 @@
                 ]
 
             })
+        }
+        
+        
+        function reassignPermissions() {
+
+            //delete the existing changes first
+            let aelected_r_id=$('#selected_row_id').val();
+            let url1='{{url('backend/delete_current_role_perm')}}'+'/'+aelected_r_id;
+
+            axios.get(url1).then(res=>{
+                console.log("success")
+            });
+
+            let a = [];
+            $("#roles_permission_table input:checkbox:checked").each(function() {
+                a.push(this.value);
+            });
+            let url22='{{url('backend/save_new_role')}}';
+
+            axios.post(url22,{'permission_array':a,'role_id':aelected_r_id})
+                .then(res=>{
+                    window.location='{{url('backend/roles')}}'
+
+                })
+                .catch(function (key,val) {
+                    alert("Error occurred. Please click save changes again to save")
+                })
+
         }
     </script>
     <!-- Jquery DataTable Plugin Js -->

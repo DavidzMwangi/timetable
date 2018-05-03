@@ -65,6 +65,9 @@ Route::group(['namespace' => 'backend', 'prefix' => 'backend', 'as' => 'backend.
     Route::post('save_role_changes','AccessController@saveRoleChanges')->name('save_role_changes');
     Route::get('permissions','AccessController@viewPermissions')->name('permissions');
     Route::get('get_roles_permissions/{role_id}','AccessController@getRolesPermission');
+    Route::get('delete_current_role_perm/{role_id}','AccessController@deleteRolePerm')->name('delete_current_role_perm');
+    Route::post('save_new_role','AccessController@saveNewRolePerm')->name('save_new_role');
+//    Route::get('save_new_role/{permission_id}/{role_id}','AccessController@saveNewRolePerm')->name('save_new_role');
     Route::post('save_permission_changes','AccessController@savePermissionChanges')->name('save_permission_changes');
 
 
