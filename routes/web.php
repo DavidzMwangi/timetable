@@ -80,6 +80,9 @@ Route::group(['namespace' => 'backend', 'prefix' => 'backend', 'as' => 'backend.
     Route::get('logs', 'LogsController@index')->name('logs');
 //    Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
+    //faculties routes
+    Route::get('all_faculties','FacultyController@index');
+    Route::post('new_faculty','FacultyController@newFaculty')->name('new_faculty');
 });
 
 Route::group(['middleware'=>'auth'],function (){
