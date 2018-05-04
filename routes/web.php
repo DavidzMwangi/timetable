@@ -81,8 +81,15 @@ Route::group(['namespace' => 'backend', 'prefix' => 'backend', 'as' => 'backend.
 //    Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
     //faculties routes
-    Route::get('all_faculties','FacultyController@index');
+    Route::get('all_faculties','FacultyController@index')->name('all_faculties');
     Route::post('new_faculty','FacultyController@newFaculty')->name('new_faculty');
+
+    //department routes
+    Route::get('all_departments','DepartmentController@index')->name('all_departments');
+    Route::post('new_department','DepartmentController@newDepartment')->name('new_department');
+    Route::get('edit_department/{department_id}','DepartmentController@editDepartment');
+    Route::get('faculties_for_department','DepartmentController@facultiesForDepartment');
+    Route::get('delete_department/{department_id}','DepartmentController@deleteDepartment');
 });
 
 Route::group(['middleware'=>'auth'],function (){

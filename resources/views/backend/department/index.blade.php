@@ -18,10 +18,10 @@
         <div class="container-fluid">
             <div class="block-header">
                 <h2>
-                    Faculties
-                    <small>All Faculties</small>
+                    Departments
+                    <small>All Departments</small>
                 </h2>
-                <button class="btn btn-primary pull-right" onclick="viewNewDiv()">New Faculty</button>
+                <button class="btn btn-primary pull-right" onclick="viewNewDiv()">New Department</button>
 
                 <hr>
             </div>
@@ -29,21 +29,21 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
 
-                        @if(count($errors->all())>0)
+                    @if(count($errors->all())>0)
                         <div class="alert-danger">
 
                             @foreach($errors->all() as $error)
 
                                 <li>{{$error}}</li>
-                                @endforeach
+                            @endforeach
                         </div>
 
                     @endif
-                    <form class="card" style="display: none" id="new_faculty_card" method="post" action="{{route('backend.new_faculty')}}">
+                    <form class="card" style="display: none" id="new_faculty_card" method="post" action="{{route('backend.new_department')}}">
                         {{csrf_field()}}
                         <div class="header">
                             <h2>
-                                New Faculty
+                                New/Edit Department
                             </h2>
                             <ul class="header-dropdown m-r--5">
                                 <li class="dropdown">
@@ -61,103 +61,117 @@
                         <div class="body">
                             <div class="table-responsive">
 
-                            <div class="col-md-6">
+                                <div class="col-md-6">
+                                    <input type="hidden" name="selected_department_id" id="selected_department_id">
+                                    {{--<h4>Some More data</h4>--}}
+                                    <p>
+                                        <label for="department_name">Department Name</label>
 
-                                {{--<h4>Some More data</h4>--}}
-                                <p>
-                                    <label for="name">Faculty Name</label>
+                                        <input id="department_name" name="name" type="text" placeholder="Department name" value="{{old('name')}}" class="form-control" required>
+                                    </p>
+                                    <p>
+                                        <label for="department_short_name" >Short Name</label>
+                                        <input id="department_short_name" name="short_name" type="text"  value="{{old('short_name')}}" placeholder="Short Name" class="form-control" required>
+                                    </p>
 
-                                    <input id="name" name="name" type="text" placeholder="Faculty name" value="{{old('name')}}" class="form-control" required>
-                                </p>
-                                <p>
-                                    <label for="short_name" >Short Name</label>
-                                    <input id="short_name" name="short_name" type="text"  value="{{old('short_name')}}" placeholder="Short Name" class="form-control" required>
-                                </p>
-
-                            </div>
-                            <div class="col-md-6">
-                                <p>
-                                    <label for="description">Description</label>
-                                    <textarea id="description" name="description" type="text" placeholder="Faculty Description" class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>
+                                        <label for="department_description">Description</label>
+                                        <textarea id="department_description" name="description" type="text" placeholder="Faculty Description" class="form-control" required>
                                         {{old("description")}}
                                     </textarea>
-                                </p>
+                                    </p>
 
-                            </div>
+                                    <p>
+                                        <label for="faculties">Faculty</label>
+                                        <select name="faculty_id" id="faculties" class="form-control">
+
+                                        </select>
+                                    </p>
+                                </div>
 
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <button type="reset"  class="btn btn-danger pull-left">Reset</button>
-                                    <button type="submit" class="btn btn-primary pull-right">Create New Faculty</button>
+                                    <button type="submit" class="btn btn-primary pull-right">Create New/Edit Department</button>
 
                                 </div>
-                                </div>
+                            </div>
                         </div>
 
 
 
                     </form>
-                    </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Exportable Table -->
-            <div class="row clearfix">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="card">
-                        <div class="header">
-                            <h2>
-                                All Users
-                            </h2>
-                            <ul class="header-dropdown m-r--5">
-                                <li class="dropdown">
-                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                        <i class="material-icons">more_vert</i>
-                                    </a>
-                                    <ul class="dropdown-menu pull-right">
-                                        <li><a href="javascript:void(0);">Action</a></li>
-                                        <li><a href="javascript:void(0);">Another action</a></li>
-                                        <li><a href="javascript:void(0);">Something else here</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="body">
-                            <div class="table-responsive">
+        <!-- Exportable Table -->
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                            All Departments
+                        </h2>
+                        <ul class="header-dropdown m-r--5">
+                            <li class="dropdown">
+                                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons">more_vert</i>
+                                </a>
+                                <ul class="dropdown-menu pull-right">
+                                    <li><a href="javascript:void(0);">Action</a></li>
+                                    <li><a href="javascript:void(0);">Another action</a></li>
+                                    <li><a href="javascript:void(0);">Something else here</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="body">
+                        <div class="table-responsive">
 
-                                <table id="users_table" class="table table-bordered table-striped table-hover ">
-                                    {{--<table id="users_table" class="table table-bordered table-striped table-hover dataTable js-exportable">--}}
-                                    <thead>
+                            <table id="users_table" class="table table-bordered table-striped table-hover ">
+                                {{--<table id="users_table" class="table table-bordered table-striped table-hover dataTable js-exportable">--}}
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Faculty Name</th>
+                                    <th>Short Name</th>
+                                    <th>Short Description</th>
+                                    <th>Created At</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+
+                                @foreach($departments as $key=>$department)
+
                                     <tr>
-                                        <th>#</th>
-                                        <th>Faculty Name</th>
-                                        <th>Short Name</th>
-                                        <th>Short Description</th>
-                                        <th>Created At</th>
-        
+                                        <td>{{$key+1}}</td>
+                                        <td>{{$department->name}}</td>
+                                        <td>{{$department->short_name}}</td>
+                                        <td>{{$department->description}}</td>
+                                        <td>{{$department->created_at->toDayDateTimeString()}}</td>
+                                        <td>
+                                            <a href="#" onclick="editRecord({{$department->id}})" >
+                                                <i class="material-icons" title="Edit">mode_edit</i> <span class="icon-name" ></span>
+                                            </a>
+                                            <a href="{{url('backend/delete_department/'. $department->id)}}"  >
+                                                <i class="material-icons" title="Delete">mode_delete</i> <span class="icon-name" ></span>
+                                            </a>
+                                        </td>
                                     </tr>
-                                    </thead>
+                                @endforeach
 
-                                    <tbody>
-
-                                    @foreach($faculties as $key=>$faculty)
-
-                                        <tr>
-                                            <td>{{$key+1}}</td>
-                                            <td>{{$faculty->name}}</td>
-                                            <td>{{$faculty->short_name}}</td>
-                                            <td>{{$faculty->description}}</td>
-                                            <td>{{$faculty->created_at->toDayDateTimeString()}}</td>
-                                        </tr>
-                                        @endforeach
-
-                                    </tbody>
-                                </table>
-                            </div>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- #END# Exportable Table -->
+        </div>
+        <!-- #END# Exportable Table -->
     </section>
 
     <div class="modal fade in" id="newUserModal" tabindex="-1" role="dialog" aria-hidden="false" style="display:none;">
@@ -254,7 +268,8 @@
 
         function viewNewDiv() {
             $('#new_faculty_card').toggle(1000,function () {
-                
+                    clearInputs()
+                getFaculties()
             })
         }
         $(function () {
@@ -264,7 +279,55 @@
 
             })
 
-        })
+        });
+        function editRecord(department_id) {
+            $('#new_faculty_card').show(1000,function () {
+                //get the records
+                let url='{{url('backend/edit_department')}}'+'/'+department_id;
+                axios.get(url)
+                    .then(res=>{
+                        $('#selected_department_id').val(department_id);
+                        $('#department_name').val(res.data.department.name);
+                        $('#department_short_name').val(res.data.department.short_name);
+                        $('#department_description').val(res.data.department.description);
+
+                        $('#faculties').find('option').remove();
+
+                        res.data.faculties.forEach(function (value,key) {
+                            if (value.id===res.data.department.faculty_id){
+                                $('#faculties').append('<option value="'+value.id+'" selected>'+value.name+'</option>')
+
+                            }else{
+                                $('#faculties').append('<option value="'+value.id+'" >'+value.name+'</option>')
+
+                            }
+                        })
+                    })
+            })
+        }
+        function clearInputs() {
+            $('#selected_department_id').val(null);
+            $('#department_name').val(null);
+            $('#department_short_name').val(null);
+            $('#department_description').val(null);
+
+            $('#faculties').find('option').remove();
+        }
+        function getFaculties() {
+            let url44='{{url('backend/faculties_for_department')}}';
+
+            axios.get(url44)
+                .then(res=>{
+                    $('#faculties').append('<option disabled selected>Select Faculty</option>');
+
+                    res.data.faculties.forEach(function (value,key) {
+
+                            $('#faculties').append('<option value="'+value.id+'" >'+value.name+'</option>')
+
+
+                    })
+                })
+        }
     </script>
     <!-- Jquery DataTable Plugin Js -->
     <script src="{{asset('template/plugins/jquery-datatable/jquery.dataTables.js')}}"></script>
