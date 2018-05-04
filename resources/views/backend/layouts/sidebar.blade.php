@@ -35,6 +35,28 @@
                     </a>
                 </li>
 
+
+
+                <li class="header">School Administration</li>
+
+                <li>
+                    <a href="javascript:void(0);" class="menu-toggle">
+                        <i class="material-icons">view_list</i>
+                        <span>School Information</span>
+                    </a>
+                    <ul class="ml-menu">
+                        <li>
+                            <a href="{{route('backend.all_faculties')}}">Faculties</a>
+                        </li>
+                        <li>
+                            <a href="{{route('backend.all_departments')}}">Department</a>
+                        </li>
+
+                    </ul>
+                </li>
+
+
+
                 <li class="header">System</li>
 
 
