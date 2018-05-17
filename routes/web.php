@@ -50,7 +50,7 @@ Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function () {
  * backend Routes
  * Namespaces indicate folder structure
  */
-Route::group(['namespace' => 'backend', 'prefix' => 'backend', 'as' => 'backend.', 'middleware' => ['role:super_admin','auth']], function () {
+Route::group(['namespace' => 'backend', 'prefix' => 'backend', 'as' => 'backend.', 'middleware' => ['auth']], function () {
     /*
      * These routes need view-backend permission
      * (good if you want to allow more than one group in the backend,
@@ -59,6 +59,10 @@ Route::group(['namespace' => 'backend', 'prefix' => 'backend', 'as' => 'backend.
      * Note: Administrator has all permissions so you do not have to specify the administrator role everywhere.
      */
 //    includeRouteFiles(__DIR__.'/backend/');
+
+    //these routes are accessible by super_admin only
+    Route::group(['middleware=>role:super_admin'],function (){
+
 
     //permission and roles routes
     Route::get('roles','AccessController@viewRoles')->name('roles');
@@ -76,6 +80,7 @@ Route::group(['namespace' => 'backend', 'prefix' => 'backend', 'as' => 'backend.
     Route::get('all_users','UserController@allUsers')->name('all_users');
     Route::post('new_user','UserController@newUser')->name('new_user');
 
+
     //logs viewer
     Route::get('logs', 'LogsController@index')->name('logs');
 //    Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
@@ -90,6 +95,29 @@ Route::group(['namespace' => 'backend', 'prefix' => 'backend', 'as' => 'backend.
     Route::get('edit_department/{department_id}','DepartmentController@editDepartment');
     Route::get('faculties_for_department','DepartmentController@facultiesForDepartment');
     Route::get('delete_department/{department_id}','DepartmentController@deleteDepartment');
+
+    //courses routes
+    Route::get('all_courses_view','CourseController@index')->name('all_courses_view');
+    Route::get('department_course','CourseController@allDepartments')->name('department_course');
+    Route::post('new_course','CourseController@newCourse')->name('new_course');
+    Route::get('all_courses','CourseController@allCourses')->name('all_courses');
+
+    //academic years
+    Route::get('all_academic_years','AcademicYearController@index')->name('all_academic_years');
+    Route::post('new_academic_year','AcademicYearController@newAcademic')->name('new_academic_year');
+    Route::get('academic_years','AcademicYearController@academicYears')->name('academic_years');
+
+
+        //semester routes
+        Route::get('all_semester_view','SemesterController@index')->name('all_semester_view');
+        Route::get('academic_for_sem','SemesterController@academicSem')->name('academic_for_sem');
+        Route::post('new_semester','SemesterController@newSemester');
+        Route::get('semester_records_for_view','SemesterController@allSemRecords')->name('semester_records_for_view');
+        Route::get('delete_semester/{sem_id}','SemesterController@deleteSemester')->name('delete_semester');
+
+    });
+
+
 });
 
 Route::group(['middleware'=>'auth'],function (){

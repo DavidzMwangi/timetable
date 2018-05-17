@@ -19,7 +19,7 @@
     <!-- Waves Effect Css -->
     <link href="{{asset('template/plugins/node-waves/waves.css')}}" rel="stylesheet" />
 
-    <link rel="stylesheet" href="{{asset("plugins/sweetalert/dist/sweetalert.css")}}">
+    <link rel="stylesheet" href="{{asset("template/plugins/sweetalert/dist/sweetalert.css")}}">
 
 
 
@@ -74,8 +74,21 @@
                 <!-- Call Search -->
                 <li><a href="javascript:void(0);" class="js-search" data-close="true"><i class="material-icons">search</i></a></li>
                 <!-- #END# Call Search -->
+                {{--logout--}}
+                <li>
+                    <a href="{{ route('logout') }}"
+                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                        Logout
+                    </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                    </form>
+                </li>
                 <!-- Notifications -->
                 <li class="dropdown">
+
                     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
                         <i class="material-icons">notifications</i>
                         <span class="label-count">7</span>
@@ -84,6 +97,7 @@
                         <li class="header">NOTIFICATIONS</li>
                         <li class="body">
                             <ul class="menu">
+
                                 <li>
                                     <a href="javascript:void(0);">
                                         <div class="icon-circle bg-light-green">
@@ -277,7 +291,7 @@
 <script src="{{asset('template/plugins/bootstrap/js/bootstrap.js')}}"></script>
 
 <!-- Select Plugin Js -->
-<script src="{{asset('template/plugins/bootstrap-select/js/bootstrap-select.js')}}"></script>
+{{--<script src="{{asset('template/plugins/bootstrap-select/js/bootstrap-select.js')}}"></script>--}}
 
 <!-- Slimscroll Plugin Js -->
 <script src="{{asset('template/plugins/jquery-slimscroll/jquery.slimscroll.js')}}"></script>
@@ -294,7 +308,7 @@
         }
     });
 </script>
-<script src="{{asset("plugins/sweetalert/dist/sweetalert.min.js")}}"></script>
+<script src="{{asset("template/plugins/sweetalert/dist/sweetalert.min.js")}}"></script>
 
 @yield('script')
 

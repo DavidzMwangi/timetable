@@ -11,4 +11,6 @@ class Department extends Model
     {
         return $this->hasOne(Faculty::class,'id','faculty_id');
     }
+
+
 }

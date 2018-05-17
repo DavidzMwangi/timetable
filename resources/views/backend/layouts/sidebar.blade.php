@@ -56,6 +56,25 @@
                 </li>
 
 
+                <li class="">
+                    <a href="{{route('backend.all_courses_view')}}">
+                        <i class="material-icons">home</i>
+                        <span>Courses</span>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="{{route('backend.all_academic_years')}}">
+                        <i class="material-icons">home</i>
+                        <span>Academic Years</span>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="{{route('backend.all_semester_view')}}">
+                        <i class="material-icons">home</i>
+                        <span>Semesters</span>
+                    </a>
+                </li>
 
                 <li class="header">System</li>
 
@@ -78,6 +97,22 @@
 
                 {{--user management--}}
                 <li>
+                    {{--<a href="javascript:void(0);" class="menu-toggle">--}}
+                        {{--<i class="material-icons">view_list</i>--}}
+                        {{--<span>Roles and Permissions</span>--}}
+                    {{--</a>--}}
+                    {{--<ul class="ml-menu">--}}
+                        {{--<li>--}}
+                            {{--<a href="{{route('backend.users')}}">User Management</a>--}}
+                        {{--</li>--}}
+                        {{--<li>--}}
+                            {{--<a href="{{route('backend.permissions')}}">Permissions</a>--}}
+                        {{--</li>--}}
+
+                    {{--</ul>--}}
+
+
+
                     <a href="{{route('backend.users')}}">
                         <i class="material-icons">text_fields</i>
                         <span>User Management</span>
