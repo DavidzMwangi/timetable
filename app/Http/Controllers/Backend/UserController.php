@@ -33,7 +33,7 @@ class UserController extends Controller
                     return '<span class="label label-primary">Super Admin</span>';
 
                 }elseif ($users->user_type==1){
-                    return '<span class="label label-success">Class Repp</span>';
+                    return '<span class="label label-success">Class Rep</span>';
 
                 }else{
                     return '<span class="label label-alert">Student</span>';

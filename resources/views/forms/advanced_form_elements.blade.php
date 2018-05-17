@@ -850,6 +850,9 @@
     <!-- Input Mask Plugin Js -->
     <script src="{{asset('template/plugins/jquery-inputmask/jquery.inputmask.bundle.js')}}"></script>
 
+    <!-- Select Plugin Js -->
+    <script src="{{asset('template/plugins/bootstrap-select/js/bootstrap-select.js')}}"></script>
+
     <!-- Multi Select Plugin Js -->
     <script src="{{asset('template/plugins/multi-select/js/jquery.multi-select.js')}}"></script>
 

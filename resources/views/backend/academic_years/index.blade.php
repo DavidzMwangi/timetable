@@ -1,25 +1,29 @@
 @extends('backend.layouts.master')
 @section('style')
+    <link href="{{asset('template/plugins/animate-css/animate.css')}}" rel="stylesheet"
+          xmlns:v-on="http://www.w3.org/1999/xhtml"/>
+
 
     <!-- Animation Css -->
-    <link href="{{asset('template/plugins/animate-css/animate.css')}}" rel="stylesheet" />
 
     <!-- JQuery DataTable Css -->
     <link href="{{asset('template/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css')}}" rel="stylesheet">
 
-    <!-- Custom Css -->
+
     <link href="{{asset('template/css/style.css')}}" rel="stylesheet">
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
-    <link href="{{asset('template/css/themes/all-themes.css')}}" rel="stylesheet" />
+    {{--    <link href="{{asset('template/css/themes/all-themes.css')}}" rel="stylesheet" />--}}
+
+
 @endsection
 @section('content')
-    <section class="content">
+    <section class="content" id="content_data">
         <div class="container-fluid">
             <div class="block-header">
                 <h2>
-                    Users
-                    <small>All Users</small>
+                    Courses
+                    <small>All Courses</small>
                 </h2>
             </div>
             <div class="row clearfix">
@@ -27,7 +31,7 @@
                     <div class="card">
                         <div class="header">
                             <h2>
-                                New User
+                                New Course
                             </h2>
                             <ul class="header-dropdown m-r--5">
                                 <li class="dropdown">
@@ -43,7 +47,27 @@
                             </ul>
                         </div>
                         <div class="body">
-                            <button type="button" class="btn btn-primary waves-effect m-r-20" data-toggle="modal" data-target="#newUserModal" >New User</button>
+                            <form action="" id="new_form" v-on:submit.prevent="saveData">
+
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12">
+                                    <div class=" col-md-4 ">
+                                        <label for="start_year">Start Year</label>
+                                        <input type="number" name="start_year" id="start_year" class="form-control" required>
+                                    {{--<p>--}}
+
+                                    {{--</p>--}}
+                                    </div>
+                                    <div class="col-md-1"></div>
+                                    <div class=" col-md-4 ">
+                                        <label for="end_year">End Year</label>
+                                        <input type="number" name="end_year" id="end_year" class="form-control" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary waves-effect m-r-20" >New Academic Year</button>
+
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -55,7 +79,7 @@
                     <div class="card">
                         <div class="header">
                             <h2>
-                                All Users
+                                All Academic Years
                             </h2>
                             <ul class="header-dropdown m-r--5">
                                 <li class="dropdown">
@@ -71,30 +95,29 @@
                             </ul>
                         </div>
                         <div class="body">
-                            <div class="form-group">
-                                <label for="user_type">Select User type</label>
-                                <select name="user_type" id="user_type" class="form-control ">
-                                    <option>Super Admin</option>
-                                    <option>Class Rep</option>
-                                    <option>Student</option>
-                                </select>
-                            </div>
                             <div class="table-responsive">
-                                <table id="users_table" class="table table-bordered table-striped table-hover ">
-                                {{--<table id="users_table" class="table table-bordered table-striped table-hover dataTable js-exportable">--}}
+                                <table id="years_table" class="table table-bordered table-striped table-hover ">
+                                    {{--<table id="users_table" class="table table-bordered table-striped table-hover dataTable js-exportable">--}}
                                     <thead>
                                     <tr>
-                                        <th>id</th>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Type</th>
-                                        <th>Created At</th>
+                                        <th>#</th>
+                                        <th>Academic Year</th>
+                                        {{--<th>Actions</th>--}}
 
                                     </tr>
                                     </thead>
 
                                     <tbody>
+                                    <tr v-for="(record,key) in records">
+                                        <td>@{{ key+1 }}</td>
+                                        <td>@{{ record }}</td>
+                                        {{--<td>--}}
 
+                                            {{--<a href="#"  v-on:click="deleteRecord(record)">--}}
+                                                {{--<i class="material-icons" title="Delete">mode_delete</i>--}}
+                                            {{--</a>--}}
+                                        {{--</td>--}}
+                                    </tr>
 
                                     </tbody>
                                 </table>
@@ -107,14 +130,14 @@
         </div>
     </section>
 
-    <div class="modal fade in" id="newUserModal" tabindex="-1" role="dialog" aria-hidden="false" style="display:none;">
+    <div class="modal fade in" id="newCourseModal" tabindex="-1" role="dialog" aria-hidden="false" style="display:none;">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title">New User</h4>
+                    <h4 class="modal-title">New Course</h4>
                 </div>
-                <form action="{{url('backend/new_user')}}" method="post">
+                <form action="{{route('backend.new_course')}}" method="post">
                     {{csrf_field()}}
                     <div class="modal-body">
                         <div class="row">
@@ -130,22 +153,24 @@
                             </div>
                             <div class="col-md-6">
 
+
+
                                 {{--<h4>Some More data</h4>--}}
                                 <p>
-                                    <label for="name">User Name</label>
+                                    <label for="name">Course Name</label>
 
-                                    <input id="name" name="name" type="text" placeholder="Your name" value="{{old('name')}}" class="form-control" required>
+                                    <input id="name" name="name" type="text" placeholder="Course Name" value="{{old('name')}}" class="form-control" required>
                                 </p>
                                 <p>
-                                    <label for="reg_no" >Email</label>
-                                    <input id="reg_no" name="reg_no" type="text"  value="{{old('reg_no')}}" placeholder="Class Rep RegNo" class="form-control" required>
+                                    <label for="short_name" >Short Name</label>
+                                    <input id="short_name" name="short_name" type="text"  value="{{old('short_name')}}" placeholder="Course Short Name" class="form-control" required>
                                 </p>
                                 {{--<p>--}}
-                                    {{--<label for="user_level">User Level</label>--}}
-                                    {{--<select class="form-control" name="user_level" id="user_level" required>--}}
-                                        {{--<option value="admin" >Administrator</option>--}}
-                                        {{--<option value="accountant">Accountant</option>--}}
-                                    {{--</select>--}}
+                                {{--<label for="user_level">User Level</label>--}}
+                                {{--<select class="form-control" name="user_level" id="user_level" required>--}}
+                                {{--<option value="admin" >Administrator</option>--}}
+                                {{--<option value="accountant">Accountant</option>--}}
+                                {{--</select>--}}
                                 {{--</p>--}}
                                 {{--<p>--}}
                                 {{--<input id="name2" name="name" type="text" placeholder="Your name" class="form-control">--}}
@@ -162,32 +187,22 @@
                             </div>
                             <div class="col-md-6">
                                 {{--<h4>Some More data</h4>--}}
-                                <p>
-                                    <label for="password">Password</label>
-                                    <input id="password" name="password" type="password" placeholder="Your Password" class="form-control" required>
-                                </p>
-                                <p>
-                                    <label for="password-confirm">Password Confirmation</label>
-                                    <input id="password-confirm" name="password_confirmation" type="password" placeholder="Confirm Password" class="form-control" required>
-                                </p>
-                                {{--<p>--}}
-                                {{--<input id="name8" name="name" type="text" placeholder="Your name" class="form-control">--}}
-                                {{--</p>--}}
-                                {{--<p>--}}
-                                {{--<input id="name9" name="name" type="text" placeholder="Your name" class="form-control">--}}
-                                {{--</p>--}}
-                                {{--<p>--}}
-                                {{--<input id="name10" name="name" type="text" placeholder="Your name" class="form-control">--}}
-                                {{--</p>--}}
-                                {{--<p>--}}
-                                {{--<input id="name41" name="name" type="text" placeholder="Your name" class="form-control">--}}
-                                {{--</p>--}}
+
+                                <label for="departments">Department</label>
+
+                                <div class="col-md-12">
+                                    <select class=" form-control js-example-basic-single" id="departments" name="department_id">
+                                        {{--<option value="AL">Alabama</option>--}}
+                                        {{--<option value="WY">Wyoming</option>--}}
+                                    </select>
+                                </div>
+
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn">Close</button>
-                        <button type="submit" class="btn btn-primary">Create New User</button>
+                        <button type="submit" class="btn btn-primary">Create New Course</button>
                     </div>
                 </form>
             </div>
@@ -196,41 +211,81 @@
 
 @endsection
 @section('script')
+<script>
+    $(function () {
 
-    <script type="application/javascript">
-        $(function () {
+        window.table_year= $('#years_table').DataTable({
+            // "retrieve":true,//prevents the error that occurs when you create the same datatable twice
+            // "emptyTable":"verfeferfef",
+            "info":false
 
-    $('#users_table').DataTable({
-                dom: 'lfrtip',
-                processing: false,
-                serverSide: true,
-                autoWidth: false,
-                // "retrieve":true,//prevents the error that occurs when you create the same datatable twice
 
-            ajax: {
-                url: '{{route("backend.all_users")}}',
-                    type: 'get',
-                    error: function (xhr, err) {
-                    if (err === 'parsererror')
-                    // location.reload();
-                        console.log("hehe");
-                }
+        })
+
+    });
+</script>
+    <script>
+        let apper=new Vue({
+           el:'#content_data',
+            data:{
+                records:[]
+
             },
+            created:function () {
+                this.getTableData()
+            },
+            methods:{
+                saveData:function () {
+                    let me=this;
+            let formData=new FormData();
+            formData.append('start_year',$('#start_year').val());
+            formData.append('end_year',$('#end_year').val());
+                    let url1='{{url('backend/new_academic_year')}}';
+                    axios.post(url1,formData)
+                        .then(res=>{
+                        me.getTableData();
+                            $('#start_year').val(' ');
+                            $('#end_year').val(' ')
+                        })
+                        .catch(redwe=>{
 
-        // working
-        "columns":[
-            {"data":"id"},
-            {"data":"name"},
-            {"data":"email"},
-            {"data":"user_type"},
-            {"data":"created_at"},
+                        });
+                },
+                getTableData:function () {
 
-        ]
+                    let url3='{{route('backend.academic_years')}}';
+                    let me=this;
+                    axios.get(url3)
+                        .then(res=>{
+                            me.records=res.data.academics
+                        })
 
-    })
+                },
+
+                deleteRecord:function (record_id) {
+                    alert(record_id)
+                }
+            }
 
         })
     </script>
+
+    <script type="application/javascript">
+
+
+        function getAllDepartments() {
+            //get allthe departments
+            let url2='{{route('backend.department_course')}}';
+            axios.get(url2)
+                .then(res=>{
+                    res.data.departments.forEach(function (value) {
+                        $('#departments').append('<option value="'+value.id+'">'+value.name+'</option>')
+                    })
+                })
+        }
+    </script>
+
+
     <!-- Jquery DataTable Plugin Js -->
     <script src="{{asset('template/plugins/jquery-datatable/jquery.dataTables.js')}}"></script>
     <script src="{{asset('template/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js')}}"></script>
@@ -242,10 +297,17 @@
     <script src="{{asset('template/plugins/jquery-datatable/extensions/export/buttons.html5.min.js')}}"></script>
     <script src="{{asset('template/plugins/jquery-datatable/extensions/export/buttons.print.min.js')}}"></script>
 
-    <!-- Custom Js -->
-    <script src="{{asset('template/js/admin.js')}}"></script>
+    {{--<!-- Custom Js -->--}}
+    {{--<script src="{{asset('template/js/admin.js')}}"></script>--}}
     <script src="{{asset('template/js/pages/tables/jquery-datatable.js')}}"></script>
 
-    <!-- Demo Js -->
-    <script src="{{asset('template/js/demo.js')}}"></script>
+
+    {{--<!-- Custom Js -->--}}
+    <script src="{{asset('template/js/admin.js')}}"></script>
+    {{--    <script src="{{asset('template/js/pages/forms/advanced-form-elements.js')}}"></script>--}}
+
+    {{--<!-- Demo Js -->--}}
+    {{--<script src="{{asset('template/js/demo.js')}}"></script>--}}
+
+
 @endsection

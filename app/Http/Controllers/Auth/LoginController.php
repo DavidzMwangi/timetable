@@ -44,7 +44,6 @@ class LoginController extends Controller
         if(filter_var($request->get('email'), FILTER_VALIDATE_EMAIL))
         {
             return $request->only($this->username(), 'password');
-
 //            echo 'This is a valid email address.';
 //            echo filter_var($email, FILTER_VALIDATE_EMAIL);
             //exit("E-mail is not valid");

@@ -345,5 +345,5 @@
     <script src="{{asset('template/js/pages/tables/jquery-datatable.js')}}"></script>
 
     <!-- Demo Js -->
-    <script src="{{asset('template/js/demo.js')}}"></script>
+{{--    <script src="{{asset('template/js/demo.js')}}"></script>--}}
 @endsection
