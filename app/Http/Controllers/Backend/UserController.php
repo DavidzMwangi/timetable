@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Plugins\OneSignal;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -77,5 +78,11 @@ class UserController extends Controller
         return redirect()->back();
 
 
+    }
+
+    public function oneSignal()
+    {
+        $one=new OneSignal();
+        $one->sendMessage('hello',1,"tr");
     }
 }
