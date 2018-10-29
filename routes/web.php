@@ -50,6 +50,8 @@ Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function () {
  * backend Routes
  * Namespaces indicate folder structure
  */
+
+
 Route::group(['namespace' => 'backend', 'prefix' => 'backend', 'as' => 'backend.', 'middleware' => ['auth']], function () {
     /*
      * These routes need view-backend permission
@@ -120,6 +122,8 @@ Route::group(['namespace' => 'backend', 'prefix' => 'backend', 'as' => 'backend.
 
 });
 
+//notification
+Route::get('one_signal','Backend\UserController@oneSignal');
 Route::group(['middleware'=>'auth'],function (){
 
 
